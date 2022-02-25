@@ -9,11 +9,11 @@ func (s *Stack) Push(item interface{}) {
 }
 
 func (s *Stack) Pop() (interface{}, error) {
-	if s.Size() == 0 {
+	if s.Empty() {
 		return nil, errors.New("empty stack")
 	}
+	element := s.Top()
 	index := s.Size() - 1
-	element := (*s)[index]
 	*s = (*s)[:index]
 	return element, nil
 }
@@ -22,7 +22,7 @@ func (s Stack) Empty() bool {
 	if s == nil {
 		return true
 	}
-	return len(s) == 0
+	return s.Size() == 0
 }
 
 func (s Stack) Size() int {
@@ -30,8 +30,9 @@ func (s Stack) Size() int {
 }
 
 func (s Stack) Top() interface{} {
-	if s.Size() == 0 {
+	size := s.Size()
+	if size == 0 {
 		return nil
 	}
-	return s[s.Size()-1]
+	return s[size-1]
 }

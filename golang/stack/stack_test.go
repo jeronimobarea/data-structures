@@ -15,26 +15,26 @@ func setup() Stack {
 }
 
 func Test_Stack_Push(t *testing.T) {
-	var testData Stack
-	testData.Push("Push")
+	var stack Stack
+	stack.Push("Push")
 
-	assert.Equal(t, Stack{"Push"}, testData)
+	assert.Equal(t, Stack{"Push"}, stack)
 }
 
 func Test_Stack_Pop(t *testing.T) {
-	testData := setup()
+	stack := setup()
 
-	deleted, err := testData.Pop()
+	deleted, err := stack.Pop()
 
 	assert.NoError(t, err)
-	assert.Equal(t, Stack{"hi", "bye"}, testData)
+	assert.Equal(t, Stack{"hi", "bye"}, stack)
 	assert.Equal(t, "hey", deleted)
 }
 
 func Test_Stack_PopEmpty(t *testing.T) {
-	var testData Stack
+	var stack Stack
 
-	deleted, err := testData.Pop()
+	deleted, err := stack.Pop()
 
 	assert.Error(t, err)
 	assert.EqualError(t, err, "empty stack")
@@ -42,54 +42,54 @@ func Test_Stack_PopEmpty(t *testing.T) {
 }
 
 func Test_Stack_PopOneItem(t *testing.T) {
-	var testData Stack
-	testData.Push("hi")
+	var stack Stack
+	stack.Push("hi")
 
-	deleted, err := testData.Pop()
+	deleted, err := stack.Pop()
 
 	assert.NoError(t, err)
 	assert.Equal(t, "hi", deleted)
-	assert.Equal(t, Stack{}, testData)
+	assert.Equal(t, Stack{}, stack)
 }
 
 func Test_Stack_Empty(t *testing.T) {
-	var testData Stack
+	var stack Stack
 
-	assert.Equal(t, true, testData.Empty())
+	assert.Equal(t, true, stack.Empty())
 }
 
 func Test_Stack_NotEmpty(t *testing.T) {
-	testData := setup()
+	stack := setup()
 
-	assert.Equal(t, false, testData.Empty())
+	assert.Equal(t, false, stack.Empty())
 }
 
 func Test_Stack_EmptyStackEmpty(t *testing.T) {
-	var testData Stack
+	var stack Stack
 
-	assert.Equal(t, true, testData.Empty())
+	assert.Equal(t, true, stack.Empty())
 }
 
 func Test_Stack_Size(t *testing.T) {
-	testData := setup()
+	stack := setup()
 
-	assert.Equal(t, 3, testData.Size())
+	assert.Equal(t, 3, stack.Size())
 }
 
 func Test_Stack_SizeEmptyStack(t *testing.T) {
-	var testData Stack
+	var stack Stack
 
-	assert.Equal(t, 0, testData.Size())
+	assert.Equal(t, 0, stack.Size())
 }
 
 func Test_Stack_Top(t *testing.T) {
-	testData := setup()
+	stack := setup()
 
-	assert.Equal(t, "hey", testData.Top())
+	assert.Equal(t, "hey", stack.Top())
 }
 
 func Test_Stack_TopEmpty(t *testing.T) {
-	var testData Stack
+	var stack Stack
 
-	assert.Equal(t, nil, testData.Top())
+	assert.Equal(t, nil, stack.Top())
 }

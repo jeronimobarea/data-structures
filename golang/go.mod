@@ -1,4 +1,4 @@
-module github.com/jeronimobarea/data-structures/stack/go
+module github.com/jeronimobarea/data-structures/golang
 
 go 1.17
 

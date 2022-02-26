@@ -17,7 +17,7 @@ func (q *Queue) DeQueue() (interface{}, error) {
 	return element, nil
 }
 
-func (q Queue) Empty() bool {
+func (q *Queue) Empty() bool {
 	if q == nil {
 		return true
 	}

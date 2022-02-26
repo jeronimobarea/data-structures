@@ -36,6 +36,7 @@ func (l *LinkedList) Append(item interface{}) {
 		l.Head = node
 		return
 	}
+
 	list := l.Head
 	for list.Next != nil {
 		list = list.Next
@@ -49,11 +50,9 @@ func (l *LinkedList) Insert(item interface{}, position uint) {
 		return
 	}
 
-	var counter uint = 0
-
 	node := l.Head
 	for node.Next != nil {
-		if counter == position-1 {
+		if position-1 == 0 {
 			newNode := &Node{
 				Data: item,
 				Next: node.Next,
@@ -61,8 +60,8 @@ func (l *LinkedList) Insert(item interface{}, position uint) {
 			node.Next = newNode
 			return
 		}
+		position--
 		node = node.Next
-		counter++
 	}
 }
 
@@ -70,6 +69,7 @@ func (l *LinkedList) Pop() (*Node, error) {
 	if l.empty() {
 		return nil, errors.New("empty list")
 	}
+
 	element := l.Head
 	l.Head = l.Head.Next
 	return element, nil
@@ -84,16 +84,15 @@ func (l *LinkedList) Delete(position uint) error {
 		return err
 	}
 
-	var counter uint = 0
-
 	node := l.Head
 	for node.Next != nil {
-		if counter == position-1 {
-			node.Next = node.Next.Next
+		if position-1 == 0 {
+			nextNode := node.Next
+			node.Next = nextNode.Next
 			return nil
 		}
+		position--
 		node = node.Next
-		counter++
 	}
 	return nil
 }
@@ -103,24 +102,40 @@ func (l *LinkedList) Size() int {
 		return 0
 	}
 
-	size := 1
+	size := 0
 	node := l.Head
-	for node.Next != nil {
+	for node != nil {
 		size++
 		node = node.Next
 	}
 	return size
 }
 
+func (l *LinkedList) Search(item interface{}) (*Node, bool, error) {
+	if l.empty() {
+		return nil, false, errors.New("attempting search on an empty list")
+	}
+
+	node := l.Head
+	for node != nil {
+		if node.Data == item {
+			return node, true, nil
+		}
+		node = node.Next
+	}
+	return nil, false, nil
+}
+
 func (l *LinkedList) Display() string {
 	if l.empty() {
 		return ""
 	}
+
+	var display string
 	node := l.Head
-	display := fmt.Sprintf("%v -> ", l.Head.Data)
-	for node.Next != nil {
-		node = node.Next
+	for node != nil {
 		display += fmt.Sprintf("%v -> ", node.Data)
+		node = node.Next
 	}
 	return display
 }

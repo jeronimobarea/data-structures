@@ -134,13 +134,21 @@ func Test_LinkedList_PopEmpty(t *testing.T) {
 func Test_LinkedList_Delete(t *testing.T) {
 	list := setup()
 
-	err := list.Delete(1)
+	list.Append("hi")
+	list.Append("yay")
 
-	assert.NoError(t, err)
+	assert.NoError(t, list.Delete(2))
 
 	expected := LinkedList{
 		Head: &Node{
 			Data: "bye",
+			Next: &Node{
+				Data: "xd",
+				Next: &Node{
+					Data: "yay",
+					Next: nil,
+				},
+			},
 		},
 	}
 	assert.Equal(t, expected, list)
@@ -156,7 +164,7 @@ func Test_LinkedList_DeleteIndexOverflow(t *testing.T) {
 	assert.Equal(t, setup(), list)
 }
 
-func Test_LinkedList_DeleteLastItem(t *testing.T) {
+func Test_LinkedList_DeleteLastItemInList(t *testing.T) {
 	var list LinkedList
 
 	list.Push("xd")
@@ -182,6 +190,55 @@ func Test_LinkedList_Display(t *testing.T) {
 	list := setup()
 
 	assert.Equal(t, "bye -> xd -> ", list.Display())
+}
+
+func Test_LinkedList_Search(t *testing.T) {
+	list := setup()
+
+	result, found, err := list.Search("xd")
+	expected := &Node{
+		Data: "xd",
+	}
+	assert.NoError(t, err)
+	assert.True(t, found)
+	assert.Equal(t, expected, result)
+}
+
+func Test_LinkedList_SearchNoFound(t *testing.T) {
+	list := setup()
+
+	result, found, err := list.Search("hi")
+
+	assert.NoError(t, err)
+	assert.False(t, found)
+	assert.Nil(t, result)
+}
+
+func Test_LinkedList_SearchFirst(t *testing.T) {
+	list := setup()
+
+	result, found, err := list.Search("bye")
+
+	expected := &Node{
+		Data: "bye",
+		Next: &Node{
+			Data: "xd",
+		},
+	}
+	assert.NoError(t, err)
+	assert.True(t, found)
+	assert.Equal(t, expected, result)
+}
+
+func Test_LinkedList_SearchEmpty(t *testing.T) {
+	var list LinkedList
+
+	result, found, err := list.Search("hi")
+
+	assert.Error(t, err)
+	assert.EqualError(t, err, "attempting search on an empty list")
+	assert.False(t, found)
+	assert.Nil(t, result)
 }
 
 func Test_LinkedList_DisplayEmpty(t *testing.T) {

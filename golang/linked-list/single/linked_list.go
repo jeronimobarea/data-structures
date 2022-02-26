@@ -1,4 +1,4 @@
-package linked_list
+package single
 
 import (
 	"errors"
@@ -23,8 +23,8 @@ func (l *LinkedList) empty() bool {
 func (l *LinkedList) Push(item interface{}) {
 	newHead := &Node{
 		Data: item,
+		Next: l.Head,
 	}
-	newHead.Next = l.Head
 	l.Head = newHead
 }
 
@@ -47,6 +47,10 @@ func (l *LinkedList) Append(item interface{}) {
 func (l *LinkedList) Insert(item interface{}, position uint) {
 	if position == 0 {
 		l.Push(item)
+		return
+	}
+	if int(position) == l.Size() {
+		l.Append(item)
 		return
 	}
 

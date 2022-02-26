@@ -1,4 +1,4 @@
-package linked_list
+package single
 
 import (
 	"testing"
@@ -177,7 +177,8 @@ func Test_LinkedList_DeleteLastItemInList(t *testing.T) {
 func Test_LinkedList_Size(t *testing.T) {
 	list := setup()
 
-	assert.Equal(t, 2, list.Size())
+	list.Append("yay")
+	assert.Equal(t, 3, list.Size())
 }
 
 func Test_LinkedList_SizeEmpty(t *testing.T) {
